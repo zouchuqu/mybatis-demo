@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.demo.model">
+
+    <!--在配置文件中如果没有配置别名，则需要写全类名-->
+    <!--<select id="selectAll" resultType="com.mybatis.demo.model.UserInfo">-->
+    <select id="selectAll" resultType="UserInfo">
+
+        select id, username, password
+        from user_info
+    </select>
+</mapper>
