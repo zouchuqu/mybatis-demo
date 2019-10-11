@@ -33,7 +33,8 @@
     <!-- 配置映射文件：用来配置sql语句和结果集类型等 -->
     <mappers>
         <!--mapper.xml文件的路径-->
-        <!--<mapper resource="com/mybatis/demo/mapper/UserInfoMapper.xml"/>-->
-        <mapper resource="mapper/UserInfoMapper.xml"/>
+        <mapper class="com.mybatis.demo.mapper.UserInfoMapper"/>
+        <!--<mapper resource="mapper/UserInfoMapper.xml"/>-->
+        <!--<mapper class=""-->
     </mappers>
 </configuration>
