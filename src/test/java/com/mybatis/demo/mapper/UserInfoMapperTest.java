@@ -56,7 +56,7 @@ public class UserInfoMapperTest {
 //            String statement = "com.mybatis.demo.selectUserInfoByUsernameAndSex";
             String statement = "selectUserInfoByUsernameAndSex";
             UserInfo userInfo = new UserInfo();
-            userInfo.setUsername("Jack");
+//            userInfo.setUsername("Jack");
             userInfo.setSex(1);
             List<UserInfo> result = sqlSession.selectList(statement, userInfo);
             log.info("result={}", result);

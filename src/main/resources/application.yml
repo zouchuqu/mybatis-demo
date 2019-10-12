@@ -9,8 +9,8 @@ logging:
   level:
     com.mybatis.demo.model: trace
 #mybatis配置
-mybatis:
-  typeAliasesPackage: com.mybatis.demo.model
-  mapperLocations: classpath:mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+#mybatis:
+#  typeAliasesPackage: com.mybatis.demo.model
+#  mapperLocations: classpath:mapper/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
