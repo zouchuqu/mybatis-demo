@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * @auther kklu
  * @date 2019/10/11 19:01
@@ -19,11 +21,11 @@ public interface UserInfoMapper {
 
     //查询 user_info 表所有数据
     @Select("select * from user_info")
-    UserInfo selectUserInfoAll(int id) throws Exception;
+    List<UserInfo> selectUserInfoAll() throws Exception;
 
    //根据 id 查询 user_info 表数据
     @Select("select * from user_info where username like '%${value}%'")
-    UserInfo selectLikeUserName(String username) throws Exception;
+    List<UserInfo> selectLikeUserName(String username) throws Exception;
 
     //向 user_info 表插入一条数据
     @Insert("insert into user_info(username,password) value(#{username},#{password})")

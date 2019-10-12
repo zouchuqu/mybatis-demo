@@ -8,9 +8,3 @@ spring:
 logging:
   level:
     com.mybatis.demo.model: trace
-#mybatis配置
-#mybatis:
-#  typeAliasesPackage: com.mybatis.demo.model
-#  mapperLocations: classpath:com.mybatis.demo.mapper/*.xml
-#  configuration:
-#    map-underscore-to-camel-case: true

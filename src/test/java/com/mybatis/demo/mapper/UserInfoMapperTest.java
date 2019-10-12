@@ -48,16 +48,7 @@ public class UserInfoMapperTest {
     //根据id查询user表数据
     @Test
     public void testSelectUserInfoById() {
-
         try {
-        /*这个字符串由 userMapper.xml 文件中 两个部分构成
-            <mapper namespace="com.mybatis.demo"> 的 namespace 的值
-            <select id="selectUserById" > id 值*/
-            /*可以单独写 <select id="selectUserById" > id 值*/
-
-//            String statement = "com.mybatis.demo.selectUserInfoById";
-            String statement = "selectUserInfoById";
-//            UserInfo userInfo = sqlSession.selectOne(statement, 1);
             UserInfo userInfo = userInfoMapper.selectUserInfoById(1);
             log.info("userInfo={}", userInfo);
         } catch (Exception e) {
@@ -71,13 +62,13 @@ public class UserInfoMapperTest {
     //查询所有user表所有数据
     @Test
     public void testSelectUserInfoAll() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            String statement = "selectUserInfoAll";
-            List<UserInfo> listUser = sqlSession.selectList(statement);
+            List<UserInfo> listUser = userInfoMapper.selectUserInfoAll();
             for (UserInfo userInfo : listUser) {
                 log.info("userInfo={}", userInfo);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
@@ -87,12 +78,13 @@ public class UserInfoMapperTest {
     //模糊查询：根据 user 表的username字段
     @Test
     public void testSelectLikeUserName() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            List<UserInfo> listUser = sqlSession.selectList("selectLikeUserName", "%t%");
+            List<UserInfo> listUser = userInfoMapper.selectLikeUserName("J");
             for (UserInfo userInfo : listUser) {
                 log.info("userInfo={}", userInfo);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
@@ -102,14 +94,15 @@ public class UserInfoMapperTest {
     //向 user 表中插入一条数据
     @Test
     public void testInsertUser() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             UserInfo user = new UserInfo();
-            user.setUsername("Bob");
+            user.setUsername("黎明");
             user.setPassword("123456");
-            sqlSession.insert("insertUserInfo", user);
+            userInfoMapper.insertUserInfo(user);
             //提交插入的数据
             sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
@@ -119,28 +112,29 @@ public class UserInfoMapperTest {
     //根据 id 更新 user 表的数据
     @Test
     public void testUpdateUserById() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             //如果设置的 id不存在，那么数据库没有数据更改
             UserInfo user = new UserInfo();
-            user.setId(4L);
+            user.setId(7L);
             user.setUsername("Jack");
-            sqlSession.update("updateUserInfoById", user);
+            userInfoMapper.updateUserInfoById(user);
             sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
         }
     }
 
-
     //根据 id 删除 user 表的数据
     @Test
     public void testDeleteUserInfoById() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            sqlSession.delete("deleteUserInfoById", 6);
+            userInfoMapper.deleteUserInfoById(8);
             sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
