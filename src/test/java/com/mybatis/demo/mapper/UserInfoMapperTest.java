@@ -27,6 +27,7 @@ import java.util.List;
 @Slf4j
 public class UserInfoMapperTest {
     private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSession sqlSession = null;
 
     @BeforeClass
     public static void init() {
@@ -35,6 +36,7 @@ public class UserInfoMapperTest {
             Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
             //创建 SqlSessionFactory 对象，该对象包含了mybatis-config.xml相关配置信息
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            sqlSession = sqlSessionFactory.openSession();
             reader.close();
         } catch (IOException ignore) {
             ignore.printStackTrace();
@@ -44,18 +46,20 @@ public class UserInfoMapperTest {
 
     //根据id查询user表数据
     @Test
-    public void testSelectUserInfoById() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+    public void testSelectUserInfoByUsernameAndSex() {
         try {
         /*这个字符串由 userMapper.xml 文件中 两个部分构成
             <mapper namespace="com.mybatis.demo"> 的 namespace 的值
             <select id="selectUserById" > id 值*/
             /*可以单独写 <select id="selectUserById" > id 值*/
 
-//            String statement = "com.mybatis.demo.selectUserInfoById";
-            String statement = "selectUserInfoById";
-            UserInfo userInfo = sqlSession.selectOne(statement, 1);
-            log.info("userInfo={}", userInfo);
+//            String statement = "com.mybatis.demo.selectUserInfoByUsernameAndSex";
+            String statement = "selectUserInfoByUsernameAndSex";
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUsername("Jack");
+            userInfo.setSex(1);
+            List<UserInfo> result = sqlSession.selectList(statement, userInfo);
+            log.info("result={}", result);
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
