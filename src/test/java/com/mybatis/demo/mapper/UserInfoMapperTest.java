@@ -48,11 +48,11 @@ public class UserInfoMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
         /*这个字符串由 userMapper.xml 文件中 两个部分构成
-            <mapper namespace="com.mybatis.demo"> 的 namespace 的值
+            <mapper namespace="com.mybatis.demo.model"> 的 namespace 的值
             <select id="selectUserById" > id 值*/
             /*可以单独写 <select id="selectUserById" > id 值*/
 
-//            String statement = "com.mybatis.demo.selectUserInfoById";
+//            String statement = "com.mybatis.demo.model.selectUserInfoById";
             String statement = "selectUserInfoById";
             UserInfo userInfo = sqlSession.selectOne(statement, 1);
             log.info("userInfo={}", userInfo);
