@@ -1,6 +1,7 @@
 package com.mybatis.demo.mapper;
 
 import com.mybatis.demo.model.UserInfo;
+import com.mybatis.demo.model.UserInfoForm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +58,7 @@ public class UserInfoMapperTest {
 //            String statement = "com.mybatis.demo.selectUserInfoByUsernameAndSex";
             String statement = "selectUserInfoByUsernameAndSex";
             UserInfo userInfo = new UserInfo();
-//            userInfo.setUsername("Jack");
+            userInfo.setUsername("Jack");
             userInfo.setSex(1);
             List<UserInfo> result = sqlSession.selectList(statement, userInfo);
             log.info("result={}", result);
@@ -66,23 +68,6 @@ public class UserInfoMapperTest {
         }
     }
 
-    //查询所有user表所有数据
-    @Test
-    public void testSelectUserInfoAll() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        try {
-            String statement = "selectUserInfoAll";
-            List<UserInfo> listUser = sqlSession.selectList(statement);
-            for (UserInfo userInfo : listUser) {
-                log.info("userInfo={}", userInfo);
-            }
-        } finally {
-            //不要忘记关闭 sqlSession
-            sqlSession.close();
-        }
-    }
-
-    //模糊查询：根据 user 表的username字段
     @Test
     public void testSelectLikeUserName() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -97,9 +82,31 @@ public class UserInfoMapperTest {
         }
     }
 
+    @Test
+    public void testSelectUserByListId() {
+        try {
+            UserInfoForm uv = new UserInfoForm();
+            List<Integer> ids = new ArrayList<>();
+            ids.add(1);
+            ids.add(2);
+            ids.add(3);
+            ids.add(50);
+            uv.setIds(ids);
+            List<UserInfo> listUser = sqlSession.selectList("selectUserByListId", uv);
+            for(UserInfo info : listUser){
+                log.info("info={}", info);
+            }
+        } finally {
+            //不要忘记关闭 sqlSession
+            sqlSession.close();
+        }
+    }
+
+
+
     //向 user 表中插入一条数据
     @Test
-    public void testInsertUser() {
+    public void testInsertUserInfo() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             UserInfo user = new UserInfo();
@@ -116,15 +123,35 @@ public class UserInfoMapperTest {
 
     //根据 id 更新 user 表的数据
     @Test
-    public void testUpdateUserById() {
+    public void testUpdateUserInfoById() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             //如果设置的 id不存在，那么数据库没有数据更改
-            UserInfo user = new UserInfo();
-            user.setId(4L);
-            user.setUsername("Jack");
-            sqlSession.update("updateUserInfoById", user);
+            UserInfo userInfo = new UserInfo();
+            userInfo.setId(4L);
+            userInfo.setUsername("Text");
+//            userInfo.setSex(1);
+            sqlSession.update("updateUserInfoById", userInfo);
             sqlSession.commit();
+        } finally {
+            //不要忘记关闭 sqlSession
+            sqlSession.close();
+        }
+    }
+  //根据 id 更新 user 表的数据
+    @Test
+    public void testSelectUserInfoByChoose() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            //如果设置的 id不存在，那么数据库没有数据更改
+            UserInfo userInfo = new UserInfo();
+//            userInfo.setId(7L);
+//            userInfo.setUsername("Text");
+//            userInfo.setSex(1);
+            List<UserInfo> listUser = sqlSession.selectList("selectUserInfoByChoose", userInfo);
+            for (UserInfo info : listUser) {
+                log.info("info={}", info);
+            }
         } finally {
             //不要忘记关闭 sqlSession
             sqlSession.close();
