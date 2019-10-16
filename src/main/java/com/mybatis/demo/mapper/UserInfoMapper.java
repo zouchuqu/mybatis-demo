@@ -1,9 +1,10 @@
 package com.mybatis.demo.mapper;
 
+import com.mybatis.demo.model.SysRole;
 import com.mybatis.demo.model.UserInfo;
-import com.mybatis.demo.model.UserInfoForm;
 
 import java.util.List;
+
 
 /**
  * @auther kklu
@@ -12,32 +13,15 @@ import java.util.List;
  */
 
 public interface UserInfoMapper {
+    //一对多查询方式一
+    //根据用户id查询用户信息，以及用户下面的所有订单信息
+    UserInfo selectUserInfoAndOrdersByUserId(int UserId);
+    //一对多查询方式二
+    UserInfo getUserInfoAndOrdersByUserInfoId(int UserId);
 
-    //根据用户名和性别查询
-    List<UserInfo> selectUserInfoByUsernameAndSex(UserInfo userInfo) throws Exception;
-
-    //根据 id 修改 user_info 表数据
-    void updateUserInfoById(UserInfo userInfo) throws Exception;
-
-    //根据某一个条件查询
-    List<UserInfo> selectUserInfoByChoose(UserInfo userInfo) throws Exception;
-
-    //根据一组用户 id 查询用户
-    List<UserInfo> selectUserByListId(UserInfoForm userInfoForm) throws Exception;
-
-    //根据 id 查询 user_info 表数据
-    UserInfo selectUserInfoById(int id) throws Exception;
-
-    //查询 user_info 表所有数据
-    List<UserInfo> selectUserInfoAll() throws Exception;
-
-    //根据 id 查询 user_info 表数据
-    List<UserInfo> selectLikeUserName(String username) throws Exception;
-
-    //向 user_info 表插入一条数据
-    void insertUserInfo(UserInfo userInfo) throws Exception;
-
-    //根据 id 删除 user_info 表数据
-    void deleteUserInfoById(int id) throws Exception;
+    //多对多查询--给定角色id，查询这个角色所属的所有用户信息
+    List<UserInfo> selectUserInfoByRoleId(int roleId);
+    //多对多查询--给定用户id，查询这个用户所拥有的角色信息
+    List<SysRole> selectSysRoleByUserInfoId(int userId);
 
 }

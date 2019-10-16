@@ -32,9 +32,6 @@
     </environments>
     <!-- 配置映射文件：用来配置sql语句和结果集类型等 -->
     <mappers>
-        <!--xxxMapper.java 接口文件的路径,注册单个接口的方式-->
-        <!--<mapper class="com.mybatis.demo.mapper.UserInfoMapper"/>-->
-
         <!--注册多个接口的方式，该包名下所有的接口-->
         <package name="com.mybatis.demo.mapper"/>
     </mappers>

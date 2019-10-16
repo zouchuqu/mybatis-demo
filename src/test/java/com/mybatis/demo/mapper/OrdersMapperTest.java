@@ -1,8 +1,7 @@
 package com.mybatis.demo.mapper;
 
-import com.mybatis.demo.model.SysRole;
+import com.mybatis.demo.model.Orders;
 import com.mybatis.demo.model.UserInfo;
-import com.mybatis.demo.form.UserInfoForm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -16,22 +15,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @auther kklu
- * @date 2019/9/29 15:49
+ * @date 2019/10/15 16:18
  * @describe
  */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-public class UserInfoMapperTest {
+public class OrdersMapperTest {
     private static SqlSessionFactory sqlSessionFactory;
     private static SqlSession sqlSession = null;
-    private static UserInfoMapper userInfoMapper;
+    private static OrderMapper orderMapper;
 
     @BeforeClass
     public static void init() {
@@ -41,7 +38,7 @@ public class UserInfoMapperTest {
             //创建 SqlSessionFactory 对象，该对象包含了mybatis-config.xml相关配置信息
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             sqlSession = sqlSessionFactory.openSession();
-            userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+            orderMapper = sqlSession.getMapper(OrderMapper.class);
             reader.close();
         } catch (IOException ignore) {
             ignore.printStackTrace();
@@ -50,9 +47,9 @@ public class UserInfoMapperTest {
 
 
     @Test
-    public void testSelectUserInfoByUsernameAndSex() {
+    public void selectOrderAndUserInfoByOrderID() {
         try {
-            UserInfo result = userInfoMapper.selectUserInfoAndOrdersByUserId(2);
+            Orders result = orderMapper.selectOrdersAndUserInfoByOrderID(1);
             log.info("result={}", result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,12 +58,11 @@ public class UserInfoMapperTest {
             sqlSession.close();
         }
     }
-
 
     @Test
-    public void testGetUserInfoAndOrdersByUserInfoId() {
+    public void getOrdersByOrderId() {
         try {
-            UserInfo result = userInfoMapper.getUserInfoAndOrdersByUserInfoId(2);
+            Orders result = orderMapper.getOrdersByOrderId(1);
             log.info("result={}", result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,11 +72,10 @@ public class UserInfoMapperTest {
         }
     }
 
-    //多对多查询--给定角色id，查询这个角色所属的所有用户信息
     @Test
-    public void testSelectUserInfoByRoleId() {
+    public void getUserInfoByUserId() {
         try {
-            List<UserInfo> result = userInfoMapper.selectUserInfoByRoleId(3);
+            UserInfo result = orderMapper.getUserInfoByUserId(2);
             log.info("result={}", result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,19 +84,4 @@ public class UserInfoMapperTest {
             sqlSession.close();
         }
     }
-
-    //多对多查询--给定用户id，查询这个用户所拥有的角色信息
-    @Test
-    public void testSelectSysRoleByUserInfoId() {
-        try {
-            List<SysRole> result = userInfoMapper.selectSysRoleByUserInfoId(4);
-            log.info("result={}", result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            //不要忘记关闭 sqlSession
-            sqlSession.close();
-        }
-    }
-
 }
